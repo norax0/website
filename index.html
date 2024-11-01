@@ -37,6 +37,44 @@
         .social a:hover {
             color: #f0e68c;
         }
+
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0, 0, 0, 0.8); 
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #1b1b2f;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #f0e68c;
+            max-width: 300px;
+            text-align: center;
+        }
+        .close {
+            color: #f0e68c;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -44,9 +82,16 @@
         <div class="icon" id="icon"></div>
         <p id="greeting"></p>
         <div class="social">
-            <a href="https://discordapp.com" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            <a href="#" id="discordLink" aria-label="Discord"><i class="fab fa-discord"></i></a>
             <a href="mailto:norax.noxx@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            <a href="https://codeberg.org/Norax" target="_blank" aria-label="Codeberg"><i class="fas fa-mountain"></i></a>
+            <a href="https://codeberg.org/Nora" target="_blank" aria-label="Codeberg"><i class="fas fa-mountain"></i></a>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <img src="discord.png" alt="Popup Image">
         </div>
     </div>
 
@@ -54,6 +99,9 @@
         const iconElement = document.getElementById('icon');
         const greetingElement = document.getElementById('greeting');
         const hours = new Date().getHours();
+        const discordLink = document.getElementById('discordLink');
+        const modal = document.getElementById('myModal');
+        const closeModal = document.getElementById('closeModal');
 
         if (hours >= 6 && hours < 18) {
             iconElement.innerHTML = '<i class="fas fa-sun" style="color: #f0e68c;"></i>';
@@ -62,6 +110,21 @@
             iconElement.innerHTML = '<i class="fas fa-moon" style="color: #f0e68c;"></i>';
             greetingElement.textContent = 'Good evening';
         }
+
+        discordLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            modal.style.display = "flex";
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
     </script>
 </body>
 </html>
